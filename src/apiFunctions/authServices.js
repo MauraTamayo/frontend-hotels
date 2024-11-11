@@ -1,14 +1,18 @@
 const baseUrlApi = process.env.NEXT_PUBLIC_API_URL
 
-export const register = async (data) => {
+export const register = async (dataRegistre) => {
+    
     try {
-        console.log("ENTROregistro")
-        const response = await fetch(`${baseUrlApi}/signup`, {
+        console.log("Entro al frontedn del registro")
+        const response = await fetch(`${baseUrlApi}/register`, {
             method: "POST",
-            body: credentials
+            body: JSON.stringify(dataRegistre)
         })
-        console.log("RES", response)
-        return await response.json()
+        console.log("registro desde back del front posts: ", response)
+        const posts = await response.json()
+        
+
+        return posts
     } catch (error) {
         // Verificar si el error tiene respuesta y si es un error de cliente (400)
         if (error.response && error.response.status === 400) {
@@ -51,7 +55,6 @@ export const login = async (credentials) => {
 
             return posts
         } catch (error) {
-            console.log(error)
             throw new Error(error);
         }
     }

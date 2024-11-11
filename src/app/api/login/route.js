@@ -1,10 +1,5 @@
-/* const dummyData = {
-  id: 1,
-  username: "mod",
-  email: "mod@pica.com",
-  roles: ["ROLE_USER", "ROLE_MODERATOR"],
-}
- */
+import { NextResponse } from "next/server"
+
 export async function POST(req) {
   try {
     const plainCredentials = await req.json()
@@ -25,14 +20,15 @@ export async function POST(req) {
     })
 
     if (!response.ok) {
-      throw new Error(error)
+        return new NextResponse("error",{status:response.status})
     }
 
     const responseData = await response.json()
     console.log("responseData:", responseData)
     return Response.json(responseData)
   } catch (error) {
-    console.error("Error en la solicitud POST:", error)
-    throw new Error(error)
+    console.log("Entro en el catch")
+    return new NextResponse("Internal server error",{status:500})
+   
   }
 }

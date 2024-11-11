@@ -1,9 +1,9 @@
-import { Hotels } from "@/views/hotels"
+import CatalogueHotels from "@/views/hotels"
 
 async function page() {
     
     return (
-    <Hotels/>
+    <CatalogueHotels/>
   )
 }
 

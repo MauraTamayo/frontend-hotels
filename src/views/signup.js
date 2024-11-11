@@ -12,7 +12,7 @@ import {
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid2';
 import { useRouter } from 'next/navigation';
-import { register } from './authService';
+import { register } from '@/apiFunctions/authServices';
 
 const roles = [
   { value: 'user', label: 'Usuario' },
@@ -76,6 +76,34 @@ const TextFieldBoxStyled = styled(TextField)(() => ({
     "& .MuiOutlinedInput-root input": {
         color: "#f5f5f5", // Color del texto del placeholder y el input
     },
+}));
+
+const StyledSelect = styled(Select)(() => ({
+  margin: "3% 0",
+  width: "100%",
+  "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+          borderColor: "#fff", // Borde blanco por defecto
+      },
+      "&:hover fieldset": {
+          borderColor: "#fff", // Borde blanco al pasar el ratón
+      },
+      "&.Mui-focused fieldset": {
+          borderColor: "#fff", // Borde blanco cuando está enfocado
+      },
+      color: "#f5f5f5",
+  },
+  "& .MuiSelect-select": {
+      padding: "16.5px 14px", // Alineación del padding con los TextField
+      color: "#f5f5f5",
+      backgroundColor: "#050E18",
+  },
+  "& .MuiMenuItem-root": {
+      color: "#f5f5f5",
+  },
+  "& .MuiSvgIcon-root": {
+      color: "#f5f5f5", // Color del icono de flecha
+  },
 }));
 
 
@@ -157,7 +185,7 @@ const Signup = () => {
             />
           </Grid>
           <Grid size={6}>
-          <Select
+          <StyledSelect
               name="role"
               multiple
               fullWidth
@@ -170,7 +198,7 @@ const Signup = () => {
                   {option.label}
                 </MenuItem>
               ))}
-            </Select>
+            </StyledSelect>
           </Grid>
           <Grid size={6}>
             <TextFieldBoxStyled

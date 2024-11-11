@@ -3,7 +3,8 @@ const baseUrlApi = process.env.NEXT_PUBLIC_API_URL
 
 export const listHotels = async () => {
     try {
-        const response = await fetch(`${baseUrlApi}/hotels`)
+        const response = await fetch('http://localhost:3500/api/hotels')
+        console.log(response.json())
         return await response.json()
     } catch (error) {
         return []

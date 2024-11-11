@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { TextField, Checkbox, Button, Typography, Box, Link, Divider } from '@mui/material';
+import { TextField, Checkbox, Button, Typography, Box, Divider } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { login } from '@/apiFunctions/authServices';
 
@@ -109,6 +109,10 @@ const Login = () => {
         }
     };
 
+    const goToRegistry = () => {
+        router.push(`/register`);
+      };
+
     return (
         <ContainerBoxStyled>
             <BodyBoxStyled>
@@ -116,7 +120,7 @@ const Login = () => {
                 <Typography variant="body4" gutterBottom>
                     Iniciar sesión para continuar
                 </Typography>
-                <FormBoxStyled component="form" onSubmit={handleSubmit}>
+                <FormBoxStyled component="form" onSubmit={handleSubmit} sx={{marginTop: "2rem"}}>
                     <TextFieldBoxStyled
                         label="username"
                         variant="outlined"
@@ -126,16 +130,6 @@ const Login = () => {
                         name="username"
                         onChange={handleChange}
                     />
-                    <Box sx={{ display: 'flex', justifyContent: 'end' }}>
-                        <Link
-                            component="button"
-                            type="button"
-                            variant="body2"
-                            sx={{ alignSelf: 'baseline' }}
-                        >
-                            ¿Olvidaste tu contraseña?
-                        </Link>
-                    </Box>
                     <TextFieldBoxStyled
                         label="Contraseña"
                         type="password"
@@ -146,22 +140,12 @@ const Login = () => {
                         name="password"
                         onChange={handleChange}
                     />
-                    <Box sx={{ display: 'flex', alignItems: 'center', margin: '1rem 0' }}>
-                        <CustomCheckbox />
-                        <Typography variant="body2">Acuérdate de mi</Typography>
-                    </Box>
-                    <ButtomStyled type="submit" fullWidth variant="contained" disabled={loading}>
+                    <ButtomStyled type="submit" fullWidth variant="contained" disabled={loading} sx={{marginTop: "2rem"}}>
                         {loading ? 'Iniciando sesión...' : 'Iniciar sesión'}
                     </ButtomStyled>
-                    {/* <Typography variant="body2" sx={{ margin: '1rem 0' }}>
-                        ¿No tienes una cuenta?<Link href="/signup">Regístrate</Link>
-                    </Typography> */}
-                    <Divider sx={{ '&::before': { background: "#B3B3B3" }, '&::after': { background: "#B3B3B3" } }}> or</Divider >
-                    <ButtomStyledLink variant="outlined" fullWidth>
-                        Sign in with Google
-                    </ButtomStyledLink>
-                    <ButtomStyledLink variant="outlined" fullWidth>
-                        Sign in with Facebook
+                    <Divider sx={{ marginTop: "2rem", '&::before': { background: "#B3B3B3" }, '&::after': { background: "#B3B3B3" } }}>¿No tienes un cauenta?</Divider >
+                    <ButtomStyledLink variant="outlined" fullWidth onClick={() => goToRegistry()}>
+                        ¡Regístrate aquí!
                     </ButtomStyledLink>
                 </FormBoxStyled>
                 {error && <Typography color="error" sx={{ marginTop: '1rem' }}>{error}</Typography>}

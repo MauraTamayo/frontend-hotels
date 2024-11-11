@@ -1,9 +1,10 @@
-import { Signup } from "@/views/register"
+import Signup from "@/views/signup"
 
 async function page() {
     
-    return (
-    <Signup/>
-  )
+  return (
+  <Signup/>
+)
 }
 
+export default page
