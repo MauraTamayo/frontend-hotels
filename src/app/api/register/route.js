@@ -1,5 +1,3 @@
-"use server"
-
 // export async function GET() {
 //     return fetch('http://localhost:8088/api/hotels', {
 //         method: 'GET',
