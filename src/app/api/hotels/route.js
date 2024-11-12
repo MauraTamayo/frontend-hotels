@@ -1,6 +1,6 @@
 export async function GET() {
   try {
-    const response = await fetch("http://localhost:8088/api/hotels", {
+    const response = await fetch("http://host.docker.internal:8088/api/hotels", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -22,7 +22,7 @@ export async function GET() {
 // export async function POST(req) {
   // const data = await req.json();
   // console.log("dataPost: ", data)
-  // return fetch('http://localhost:8088/NewHotel', {
+  // return fetch('http://host.docker.internal:8088/NewHotel', {
   //     method: 'POST',
   //     headers: {
   //         'Content-Type': 'application/json',

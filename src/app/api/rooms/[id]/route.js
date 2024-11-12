@@ -3,7 +3,7 @@ export async function GET(req,{params}) {
   
     console.log("id", id)
       try {
-        const response = await fetch(`http://localhost:8088/api/hotels/rooms?id=${id}`, {
+        const response = await fetch(`http://host.docker.internal:8088/api/hotels/rooms?id=${id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

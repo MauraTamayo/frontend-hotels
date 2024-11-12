@@ -11,7 +11,7 @@ export async function POST(req) {
     const data = JSON.stringify(plainCredentials)
     console.log("dataPost: ", data)
 
-    const response = await fetch("http://localhost:8080/api/auth/signin", {
+    const response = await fetch("http://host.docker.internal:8080/api/auth/signin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

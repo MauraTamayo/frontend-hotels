@@ -11,7 +11,7 @@ export async function POST(req) {
     const data = JSON.stringify(plainPayment)
     console.log("dataPost: ", data)
 
-    const response = await fetch("http://localhost:8088/api/availability/reservation/pay/", {
+    const response = await fetch("http://host.docker.internal:8088/api/availability/reservation/pay/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
