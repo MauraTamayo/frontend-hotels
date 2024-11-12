@@ -8,14 +8,17 @@ import Header from '@/components/Header';
 
 const Booking = () => {
   const [reservations, setReservations] = useState([]);
-  const userId = 4; // Número quemado para filtrar por usuario específico
+  // ******************************************************user**************
+  const userId = 18; // Número quemado para filtrar por usuario específico
   const router = useRouter();
 
   useEffect(() => {
     const fetchReservations = async () => {
       try {
         const allReservations = await listReservations();
+        console.log("Estos son todas las reservaciones + ",userId ," :" ,  allReservations)
         const userReservations = allReservations.filter(reservation => reservation.usuario === userId);
+        console.log("Estos son todas las reservaciones + ",userId ," :" ,  allReservations)
         setReservations(userReservations);
       } catch (error) {
         console.error('Error fetching reservations:', error);
@@ -56,7 +59,7 @@ const Booking = () => {
             <Typography variant="body2" color="text.secondary">Precio por noche: {reservation.room.precio_por_noche}</Typography>
             <Typography variant="body2" color="text.secondary">Cantidad de dias: {reservation.dias_reservados}</Typography>
             <Typography variant="body2" color="text.secondary">Número de habitaciones: {reservation.room.numero_de_camas}</Typography>
-            <Typography variant="body2" color="text.secondary">Estado: {reservation.pagado ? 'Pagada' : 'Pendiente'}</Typography>
+            <Typography variant="body2" color="text.secondary">Estado: {reservation.payment.fecha ? 'Pagada' : 'Pendiente'}</Typography>
         
             
             {reservation.payment.fecha && (
@@ -68,12 +71,14 @@ const Booking = () => {
             )}
             
             <Divider sx={{ my: 2 }} />
-            {!reservation.pagado && (
+            
               <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
                 <Box>
+                {!reservation.payment.fecha && (
                   <Button variant="contained" color="primary" onClick={() => handlePay(reservation)}>
                     Pagar
                   </Button>
+                    )}
                   <Button sx={{margin: "0 10px", background:"#070F1B" }} variant="contained" onClick={() => handleDetailRoom(reservation.id)}>
                     Ver mas Detalle
                   </Button>
@@ -83,7 +88,7 @@ const Booking = () => {
                   Eliminar
                 </Button>
               </Box>
-            )}
+          
           </CardContent>
         </Card>
       ))}

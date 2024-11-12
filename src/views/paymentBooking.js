@@ -54,12 +54,12 @@ const Payment = () => {
             <CardContent >
               <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: 2, height: '58vh' }}>
                 <Image
-                  src="/web.jpg"
+                  src="/banner.png"
                   alt="Logo"
                   layout="responsive"
                   width={500}
                   height={500}
-                  style={{ objectFit: 'cover', width: '58vh', height: '100%' }}
+                 
                 />
               </Box>
               <Typography variant="h5" fontWeight="bold">

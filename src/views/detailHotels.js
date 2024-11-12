@@ -159,7 +159,8 @@ const HotelsDetail = ({id}) => {
 		  const newReservation = {
 			habitacion: room.id,
 			dias_reservados: numberOfRooms,
-			usuario: 8,
+			// ******************************************************user**************
+			usuario: 18,
 			payment: {}, 
 		  };
 	  
