@@ -1,7 +1,6 @@
 const baseUrlApi = process.env.NEXT_PUBLIC_API_URL
 
 export const register = async (dataRegistre) => {
-    
     try {
         console.log("Entro al frontedn del registro")
         const response = await fetch(`${baseUrlApi}/register`, {
@@ -23,30 +22,10 @@ export const register = async (dataRegistre) => {
     }
 };
 
-// export const login = async (credentials) => {
-//     const temp = JSON.stringify(credentials)
-//     console.log("credenciales desde back del front temp: ", temp)
-//     try {
-//         const response = await fetch(`${baseUrlApi}/login`, {
-//             method: "POST",
-//             headers: {
-//                 'Content-Type': 'application/json',
-//             },
-//             body: temp
-//         })
-//         console.log("credenciales desde back del front response.body: ", response.body)
-//         return response.json()
-//     } catch (error) {
-//         console.log(error)
-//         return []
-//     }
-// }
-
-
 export const login = async (credentials) => {
     console.log("credentials login", credentials)
         try {
-            const data = await fetch('http://localhost:3500/api/login', {
+            const data = await fetch(`${baseUrlApi}/login`, {
                 method: "POST",
                 body: JSON.stringify(credentials)
             })

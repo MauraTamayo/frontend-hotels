@@ -2,13 +2,16 @@ import { NextResponse } from "next/server"
 
 export async function POST(req) {
   try {
-    const plainForm = await req.json()
+    const plainCredentials = await req.json()
+    console.log(
+      "credenciales desde back del server credentials: ",
+      plainCredentials
+    )
 
-
-    const data = JSON.stringify(plainForm)
+    const data = JSON.stringify(plainCredentials)
     console.log("dataPost: ", data)
 
-    const response = await fetch("http://localhost:8080/api/auth/signup", {
+    const response = await fetch("http://localhost:8080/api/auth/signin", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -21,13 +24,11 @@ export async function POST(req) {
     }
 
     const responseData = await response.json()
-    console.log("responseData:", Response.json(responseData))
+    console.log("responseData:", responseData)
     return Response.json(responseData)
-   
   } catch (error) {
-    console.log("Entro en el catch, ", error)
-    return new NextResponse("Internal server error",{status:500}, error)
+    console.log("Entro en el catch")
+    return new NextResponse("Internal server error",{status:500})
    
   }
 }
-

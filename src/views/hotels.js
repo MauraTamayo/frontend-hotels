@@ -3,10 +3,11 @@
 // pages/hotels/CatalogueHotels.js
 import React, { useState,useEffect } from 'react';
 import { styled } from '@mui/material/styles';
-import { Box, Card, CardContent, Typography, TextField, CardMedia } from '@mui/material';
+import { Box, Card, CardContent, Typography, TextField, CardMedia, Divider } from '@mui/material';
 import Grid from '@mui/material/Grid2';
 import { useRouter } from 'next/navigation'
 import { listHotels } from '@/apiFunctions/hotels';
+import Header from '@/components/Header';
 // export async function Hotels() {
 
 
@@ -41,7 +42,6 @@ const TextFieldBoxStyled = styled(TextField)(() => ({
 }));
 
 const Hotels = () => {
-  // const hotels =  listHotels();
   const [filterHotel, setFilter] = useState('');
   const router = useRouter();
   const [hotels, setHotels] = useState([]);
@@ -75,7 +75,8 @@ const Hotels = () => {
 
   return (
     <Box sx={{ padding: 4, background: "#070F1B" }}>
-      <TextField
+      <Header/>
+      <TextFieldBoxStyled
         label="Busqueda de Hoteles"
         variant="outlined"
         fullWidth
@@ -85,8 +86,8 @@ const Hotels = () => {
       />
       <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
         {filteredHotels.map((hotel) => (
-          <Grid size={3} key={hotel.id}>
-            <Card onClick={() => handleHotelClick(hotel.id)} sx={{ cursor: 'pointer' }}>
+          <Grid size={4} key={hotel.id}>
+            <Card onClick={() => handleHotelClick(hotel.id)} sx={{ cursor: 'pointer', background: "#1E1E1E", color: "#fff" }}>
               <CardMedia
                 component="img"
                 height="194"
@@ -94,10 +95,13 @@ const Hotels = () => {
                 alt={hotel.name}
               />
               <CardContent>
-                <Typography variant="h5">{hotel.name}</Typography>
-                <Typography variant="h5">{hotel.city}</Typography>
-                <Typography variant="h5">{hotel.address}</Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography gutterBottom variant="h5">{hotel.name}</Typography>
+                <Divider sx={{ margin:'6px 0', background: "#B3B3B3"}}></Divider >
+                <Typography variant="h7">Cuidad: {hotel.city}</Typography>
+                <Divider/>
+                <Typography variant="h7">Dirección: {hotel.address}</Typography>
+                <Divider sx={{ margin:'6px 0'}}/>
+                <Typography variant="body2" sx={{color: "#BCBCBC"}}>
                   {hotel.short_description}
                 </Typography>
               </CardContent>

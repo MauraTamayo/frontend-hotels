@@ -19,7 +19,7 @@ export async function GET() {
   }
 }
 
-export async function POST(req) {
+// export async function POST(req) {
   // const data = await req.json();
   // console.log("dataPost: ", data)
   // return fetch('http://localhost:8088/NewHotel', {
@@ -30,4 +30,4 @@ export async function POST(req) {
   //     },
   //     body: JSON.stringify(data)
   // }).then(async (res) => Response.json(await res.json())).catch((error) => { throw new Error(error) });
-}
+// }

@@ -1,11 +1,10 @@
-// import { HotelsDetails } from "@/views/hotels"
 
-async function page({params}) {
-    console.log("params: ", params)
-    return (
-    // <Hotels/>
-    <div>Detalles</div>
+ import HotelsDetail from '@/views/detailHotels'
+
+export default async function Page({params}) {
+  return (
+    <div>
+      <HotelsDetail id={(await params).id}/>
+    </div>
   )
 }
-
-export default page
