@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, Card, Grid, Divider } from '@mui/material';
+import { Box, Typography, Card, Grid2, Divider } from '@mui/material';
 import { detailReserver } from '@/apiFunctions/roomServices';
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css'; // Importa los estilos CSS del carrusel
