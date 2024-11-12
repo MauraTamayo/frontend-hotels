@@ -35,7 +35,7 @@ const Booking = () => {
   const handlePay = (reservation) => { router.push(`/payment?reservation=${encodeURIComponent(JSON.stringify(reservation))}`); };
 
   if (!reservations.length) {
-    return <Typography variant="h6">No hay reservas disponibles</Typography>;
+    return <Typography variant="h6">Cargando...</Typography>;
   }
 
   return (
@@ -53,7 +53,7 @@ const Booking = () => {
             <Typography variant="body2" color="text.secondary">Cantidad de dias: {reservation.dias_reservados}</Typography>
             <Typography variant="body2" color="text.secondary">Número de habitaciones: {reservation.room.numero_de_camas}</Typography>
             <Typography variant="body2" color="text.secondary">Estado: {reservation.pagado ? 'Pagada' : 'Pendiente'}</Typography>
-            {reservation.pagado && (
+            {reservation.payment.fecha && (
               <>
                 <Typography variant="body2" color="text.secondary">Fecha de pago: {reservation.payment.fecha}</Typography>
                 <Typography variant="body2" color="text.secondary">Monto pagado: {reservation.payment.monto}</Typography>

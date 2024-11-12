@@ -1,90 +1,3 @@
-// // pages/payment.js
-// import React, { useState, useEffect } from 'react';
-// import { Box, Typography, Card, CardContent, Divider, Button, RadioGroup, FormControlLabel, Radio } from '@mui/material';
-// import { useRouter } from 'next/router';
-// import dayjs from 'dayjs';
-
-// const Payment = () => {
-//   const router = useRouter();
-//   const { id } = router.query;
-//   const [reservation, setReservation] = useState(null);
-//   const [paymentMethod, setPaymentMethod] = useState('');
-
-//   useEffect(() => {
-//     const storedReservations = JSON.parse(localStorage.getItem('reservations')) || [];
-//     const currentReservation = storedReservations.find(res => res.roomId === id);
-//     setReservation(currentReservation);
-//   }, [id]);
-
-//   const handlePayment = () => {
-//     if (paymentMethod === 'pse-bancolombia') {
-//       const paymentDate = dayjs().format('YYYY-MM-DD HH:mm:ss');
-//       const transactionId = Math.floor(10000000 + Math.random() * 90000000).toString(); // ID único de 8 dígitos
-
-//       const updatedReservation = {
-//         ...reservation,
-//         isPaid: true,
-//         paymentDate,
-//         transactionId,
-//         totalAmount: reservation.roomPrice * reservation.numberOfRooms,
-//       };
-
-//       const storedReservations = JSON.parse(localStorage.getItem('reservations')) || [];
-//       const updatedReservations = storedReservations.map(res => 
-//         res.roomId === reservation.roomId ? updatedReservation : res
-//       );
-
-//       localStorage.setItem('reservations', JSON.stringify(updatedReservations));
-//       setReservation(updatedReservation);
-//       router.push('/booking');
-      
-      
-//     }
-//   };
-
-//   // localStorage.clear();
-
-//   if (!reservation) {
-//     return <Typography variant="h6">No hay reservas disponibles</Typography>;
-//   }
-
-//   return (
-//     <Box sx={{ margin: 'auto', padding: 2 }}>
-//       <Typography variant="h4" gutterBottom>
-//         Pago de Reserva
-//       </Typography>
-//       <Card sx={{ display: 'flex', flexDirection: 'column', mb: 4 }}>
-//         <CardContent>
-//           <Typography variant="h5" fontWeight="bold">Habitación: {reservation.roomName}</Typography>
-//           <Typography variant="body2" color="text.secondary">Precio por noche: {reservation.roomPrice}</Typography>
-//           <Typography variant="body2" color="text.secondary">Número de habitaciones: {reservation.numberOfRooms}</Typography>
-//           <Typography variant="body2" color="text.secondary">Total: {reservation.roomPrice * reservation.numberOfRooms}</Typography>
-//           <Divider sx={{ my: 2 }} />
-//           <Typography variant="body1" gutterBottom>Método de Pago</Typography>
-//           <RadioGroup value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)}>
-//             <FormControlLabel value="credit-card" control={<Radio />} label="Tarjeta de Crédito/Débito" />
-//             <FormControlLabel value="pse-bancolombia" control={<Radio />} label="PSE con Bancolombia" />
-//           </RadioGroup>
-//           <Button 
-//             variant="contained" 
-//             color="primary" 
-//             onClick={handlePayment} 
-//             disabled={!paymentMethod}
-//             sx={{ mt: 2 }}
-//           >
-//             Pagar
-//           </Button>
-//         </CardContent>
-//       </Card>
-//     </Box>
-//   );
-// };
-
-// export default Payment;
-
-
-// pages/payment.js
-// pages/payment.js
 "use client"
 import React, { useState, useEffect } from 'react';
 import { Box, Typography, Card, CardContent, Divider, Button, RadioGroup, FormControlLabel, Radio } from '@mui/material';
@@ -92,45 +5,45 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import dayjs from 'dayjs';
 import Image from 'next/image';
 import Header from '@/components/Header';
-
+import { bookingPayment } from '@/apiFunctions/paymentServices';
 
 const Payment = () => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const reservationParam = searchParams.get('reservation');
-  const [reservation, setReservation] = useState(reservationParam ? JSON.parse(reservationParam) : null);
-  const [paymentMethod, setPaymentMethod] = useState('');
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const reservationParam = searchParams.get('reservation');
+    const [reservation, setReservation] = useState(reservationParam ? JSON.parse(reservationParam) : null);
+    const [paymentMethod, setPaymentMethod] = useState('');
 
-  useEffect(() => {
-    if (!reservation && reservationParam) {
-      setReservation(JSON.parse(reservationParam));
-    }
-  }, [reservationParam]);
+    useEffect(() => {
+        if (!reservation && reservationParam) {
+            setReservation(JSON.parse(reservationParam));
+        }
+    }, [reservationParam]);
 
-  const handlePayment = () => {
-    const paymentDate = dayjs().format('YYYY-MM-DD HH:mm:ss');
-    const transactionId = Math.floor(10000000 + Math.random() * 90000000).toString(); // ID único de 8 dígitos
+    const handlePayment = async () => {
+      const paymentDate = dayjs().format('YYYY-MM-DD'); // Formato de fecha requerido
+      const transactionId = Math.floor(10000000 + Math.random() * 90000000).toString(); // ID único de 8 dígitos
+      const paymentData = {
+          reserva: reservation.id,
+          monto: reservation.room.precio_por_noche * reservation.dias_reservados,
+          id_transaccion: transactionId,
+          fecha: paymentDate,
+          metodo_pago: paymentMethod,
+      };
 
-    const updatedReservation = {
-      ...reservation,
-      isPaid: true,
-      paymentDate,
-      transactionId,
-      totalAmount: reservation.room.precio_por_noche * reservation.dias_reservados,
-    };
-
-    const storedReservations = JSON.parse(localStorage.getItem('reservations')) || [];
-    const updatedReservations = storedReservations.map(res => 
-      res.id === reservation.id ? updatedReservation : res
-    );
-
-    localStorage.setItem('reservations', JSON.stringify(updatedReservations));
-    setReservation(updatedReservation);
-    router.push('/booking');
+      try {
+          // Llamar a bookingPayment para enviar los datos de pago al backend
+          const response = await bookingPayment(paymentData);
+          console.log("Respuesta del backend:", response);
+          router.push('/booking');
+      } catch (error) {
+          console.error("Error al procesar el pago:", error);
+          // Muestra un mensaje de error o maneja el error según sea necesario
+      }
   };
 
   if (!reservation) {
-    return <Typography variant="h6">No hay reservas disponibles</Typography>;
+      return <Typography variant="h6">No hay reservas disponibles</Typography>;
   }
 
   return (
@@ -238,13 +151,7 @@ const Payment = () => {
               <Divider />
              
             </RadioGroup>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handlePayment}
-              disabled={!paymentMethod}
-              sx={{ mt: 2, width: '100%' }}
-            >
+            <Button variant="contained" color="primary" onClick={handlePayment} disabled={!paymentMethod} sx={{ mt: 2, width: '100%' }}>
               Pagar
             </Button>
           </CardContent>

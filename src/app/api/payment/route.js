@@ -2,16 +2,16 @@ import { NextResponse } from "next/server"
 
 export async function POST(req) {
   try {
-    const plainCredentials = await req.json()
+    const plainPayment = await req.json()
     console.log(
-      "credenciales desde back del server credentials: ",
-      plainCredentials
+      "Pago desde back del server reservas: ",
+      plainPayment
     )
 
-    const data = JSON.stringify(plainCredentials)
+    const data = JSON.stringify(plainPayment)
     console.log("dataPost: ", data)
 
-    const response = await fetch("http://localhost:8080/api/auth/signin", {
+    const response = await fetch("http://localhost:8088/api/availability/reservation/pay/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
