@@ -7,10 +7,14 @@ export const bookingPayment = async (data) => {
             method: "POST",
             body: JSON.stringify(data)
         })
+        console.log("registro desde back del front posts: ", response)
         const posts = await response.json()
-        console.log("pago de reserva desde back del front posts: ", posts)
+        
+
         return posts
     } catch (error) {
-        throw new Error(error);
+        // Verificar si el error tiene respuesta y si es un error de cliente (400)
+        return error
     }
-}
+};
+

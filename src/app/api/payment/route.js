@@ -24,11 +24,9 @@ export async function POST(req) {
     }
 
     const responseData = await response.json()
-    console.log("responseData:", responseData)
     return Response.json(responseData)
   } catch (error) {
-    console.log("Entro en el catch")
-    return new NextResponse("Internal server error",{status:500})
+    return error
    
   }
 }

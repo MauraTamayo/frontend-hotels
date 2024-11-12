@@ -26,6 +26,7 @@ import SpeakerIcon from '@mui/icons-material/Speaker';
 import SmartScreenIcon from '@mui/icons-material/SmartScreen';
 import SecurityIcon from '@mui/icons-material/Security';
 import SmokeFreeIcon from '@mui/icons-material/SmokeFree';
+import Header from '@/components/Header';
 
 const RoomDetail = ({ id }) => {
   const [room, setRoom] = useState(null);
@@ -44,6 +45,8 @@ const RoomDetail = ({ id }) => {
   }
 
   return (
+    <>
+    <Header/>
     <Box sx={{ padding: 4, backgroundColor: '#070F1B' }}>
       <Card sx={{ backgroundColor: '#070F1B' }} >
         <Carousel>
@@ -93,6 +96,8 @@ const RoomDetail = ({ id }) => {
         </Box>
       </Card>
     </Box>
+    </>
+    
   );
 };
 
